@@ -1,0 +1,4 @@
+# Ignore dependencies and logs
+node_modules/
+package-lock.json
+.npmrc
