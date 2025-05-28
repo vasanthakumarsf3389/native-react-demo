@@ -1,0 +1,12 @@
+{
+  "files": {
+    "main.css": "/native-react-demo/static/css/main.31d6cfe0.css",
+    "main.js": "/native-react-demo/static/js/main.d53ed998.js",
+    "index.html": "/native-react-demo/index.html",
+    "main.d53ed998.js.map": "/native-react-demo/static/js/main.d53ed998.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.31d6cfe0.css",
+    "static/js/main.d53ed998.js"
+  ]
+}
