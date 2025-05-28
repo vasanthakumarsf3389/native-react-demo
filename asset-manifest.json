@@ -1,12 +1,12 @@
 {
   "files": {
     "main.css": "/native-react-demo/static/css/main.31d6cfe0.css",
-    "main.js": "/native-react-demo/static/js/main.d53ed998.js",
+    "main.js": "/native-react-demo/static/js/main.8e0e2bb5.js",
     "index.html": "/native-react-demo/index.html",
-    "main.d53ed998.js.map": "/native-react-demo/static/js/main.d53ed998.js.map"
+    "main.8e0e2bb5.js.map": "/native-react-demo/static/js/main.8e0e2bb5.js.map"
   },
   "entrypoints": [
     "static/css/main.31d6cfe0.css",
-    "static/js/main.d53ed998.js"
+    "static/js/main.8e0e2bb5.js"
   ]
 }
