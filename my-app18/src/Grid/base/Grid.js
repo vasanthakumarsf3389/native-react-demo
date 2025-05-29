@@ -357,7 +357,7 @@ const GridBase = forwardRef(
                         onFocus={privateAPI.handleGridFocus}
                         onBlur={privateAPI.handleGridBlur}
                     >
-                        <Spinner visible={isLoading} />
+                        <Spinner visible={isLoading}/>
                         {renderComponent}
                     </div>
                 </GridMutableProvider>

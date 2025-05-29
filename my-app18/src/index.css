@@ -1,0 +1,12 @@
+@import "../node_modules/@syncfusion/ej2-react-grids/styles/material3.css";
+/* Inject external CSS or scripts into Storybook samples here */
+@import "../node_modules/@syncfusion/ej2-react-grids/styles/material3.css";
+@import "../node_modules/@syncfusion/react-base/styles/material3.css";
+@import "../node_modules/@syncfusion/react-buttons/styles/material3.css";
+@import "../node_modules/@syncfusion/react-calendars/styles/material3.css";
+/* @import "../node_modules/@syncfusion/react-dropdowns/styles/material3.css"; */
+@import "../node_modules/@syncfusion/react-inputs/styles/material3.css";
+@import "../node_modules/@syncfusion/react-navigations/styles/material3.css";
+@import "../node_modules/@syncfusion/react-popups/styles/material3.css";
+@import "../node_modules/@syncfusion/react-splitbuttons/styles/material3.css";
+@import "../node_modules/@syncfusion/react-notifications/styles/material3.css";

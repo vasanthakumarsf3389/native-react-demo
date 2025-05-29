@@ -505,15 +505,15 @@ import {
   useState
 } from 'react';
 import {
-  // Browser,
+  Browser,
   formatUnit,
-  // L10n,
+  L10n,
   removeClass,
-  // useProviderContext
-} from '@syncfusion/ej2-base';
+  useProviderContext
+} from '@syncfusion/react-base';
 import { useValueFormatter } from '../services/value-formatter';
 import { createServiceLocator } from '../services/service-locator';
-import { DataManager, Query } from '@syncfusion/ej2-data';
+import { DataManager, Query } from '@syncfusion/react-data';
 import { useFocusStrategy } from '../actions/useFocusStrategy';
 import { useColumns } from '../renderer/useRender';
 import { useSelection } from '../actions/useSelection';
@@ -559,18 +559,17 @@ export const useGridComputedProps = (
   props,
   gridRef
 ) => {
-  // const baseProvider = useProviderContext();
+  const baseProvider = useProviderContext();
   
   const locale = useMemo(() =>
-      props.locale || 'en-US'
-      // baseProvider.locale
+      props.locale || baseProvider.locale
   , [
       props.locale,
-      // baseProvider.locale
+      baseProvider.locale
     ]);
   const localeObj = useMemo(() =>
-      // L10n('grid', defaultLocale, locale)
-      defaultLocale
+      L10n('grid', defaultLocale, locale)
+    //   defaultLocale
   , [locale]);
   const valueFormatterService = useValueFormatter(locale);
   const serviceLocator = useMemo(() => {
@@ -667,13 +666,13 @@ export const useGridComputedProps = (
           baseClasses.push(CSS_CLASS_NAMES.GRID_HOVER);
       }
 
-      // if (/^((?!chrome|android).)*safari/i.test(navigator.userAgent) || Browser.isSafari()) {
-      //     baseClasses.push(CSS_CLASS_NAMES.MAC_SAFARI);
-      // }
+      if (/^((?!chrome|android).)*safari/i.test(navigator.userAgent) || Browser.isSafari()) {
+          baseClasses.push(CSS_CLASS_NAMES.MAC_SAFARI);
+      }
 
-      // if (Browser.isDevice) {
-      //     baseClasses.push(CSS_CLASS_NAMES.DEVICE);
-      // }
+      if (Browser.isDevice) {
+          baseClasses.push(CSS_CLASS_NAMES.DEVICE);
+      }
 
       if (rowHeight) {
           baseClasses.push(CSS_CLASS_NAMES.MIN_HEIGHT);
@@ -798,7 +797,6 @@ export const useGridComputedProps = (
 
           const isClickInsideGrid = (e.target).tabIndex !== 0
               && gridElement.contains(e.target) && gridElement !== e.target;
-          if (isClickInsideGrid) { return; }
           // Check if we can determine the focus direction
           let isForwardTabbing = true;
 
@@ -816,20 +814,23 @@ export const useGridComputedProps = (
                   isForwardTabbing = relatedIndex < gridIndex;
               }
           }
-
+          if (isClickInsideGrid && isForwardTabbing) { return; }
           // Only navigate to a cell if no cell is currently focused
           const { focusedCell } = focusModule;
           if (focusedCell.rowIndex === -1 && focusedCell.colIndex === -1) {
-              // Use requestAnimationFrame to ensure the DOM is ready
-              requestAnimationFrame(() => {
-                  if (isForwardTabbing) {
-                      // Focus the first cell when tabbing forward into the grid
-                      focusModule.navigateToFirstCell();
-                  } else {
-                      // Focus the last cell when tabbing backward into the grid
-                      focusModule.navigateToLastCell();
-                  }
-              });
+              if (!isForwardTabbing) {
+                    focusModule.setActiveMatrix(true);
+                    requestAnimationFrame(() => {
+                        focusModule.focus();
+                    });
+                    return;
+                } else {
+                    // Use requestAnimationFrame to ensure the DOM is ready
+                    requestAnimationFrame(() => {
+                        // Focus the first cell when tabbing forward into the grid
+                        focusModule.navigateToFirstCell();
+                    });
+                }
           }
       }
   }, [focusModule]);
@@ -863,6 +864,7 @@ export const useGridComputedProps = (
   }, [focusModule]);
 
   const handleGridKeyDown = useCallback((e) => {
+      if ((e.key === 'Shift' && e.shiftKey) || (e.key === 'Control' && e.ctrlKey)) { return; }
       // Handle keyboard navigation
       // Get the active matrix to determine boundaries
       // const activeMatrix = focusModule.getActiveMatrix();

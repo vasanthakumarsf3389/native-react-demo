@@ -910,12 +910,12 @@ export const useFocusStrategy = (headerRowCount, contentRowCount, columns, gridR
     const firstFocusableActiveCellIndex = useMemo(() => {
         const matrix = getActiveMatrix();
         return matrix.matrix?.[0]?.[0] === 1 ? [0, 0] : matrix.findCellIndex([0, 0], true);
-    }, [activeMatrix.current, columns]);
+    }, [activeMatrix.current, columns, isGridFocused]);
     const lastFocusableActiveCellIndex = useMemo(() => {
         const matrix = getActiveMatrix();
         return matrix.matrix?.[matrix.rows]?.[matrix.columns] === 1 ? [matrix.rows, matrix.columns] :
             matrix.findCellIndex([matrix.rows, matrix.columns], matrix.matrix?.[matrix.rows]?.[matrix.columns] !== 0);
-    }, [activeMatrix.current, columns]);
+    }, [activeMatrix.current, columns, isGridFocused]);
     // /**
     //  * Get rows from index
     //  *
@@ -1444,7 +1444,17 @@ export const useFocusStrategy = (headerRowCount, contentRowCount, columns, gridR
                 headerMatrix.current.findCellIndex([0, 0], true);
             headerMatrix.current.current = [...firstValidCell];
         }
+        setFirstFocusableTabIndex();
+        // setLastContentCellTabIndex();
     }, [headerRowCount, contentRowCount, columns?.length, columns]);
+    useEffect(() => {
+        if (isGridFocused && focusedCell.current.rowIndex === -1 && focusedCell.current.colIndex === -1) {
+            if (activeMatrix.current === 'content') {
+                setLastContentCellTabIndex();
+                // focus();
+            }
+        }
+    }, [isGridFocused]);
     /**
      * Set the first focusable element's tabIndex to 0
      * This is used to allow users to tab into the grid
